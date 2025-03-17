@@ -3,48 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auto-Fill Tattoo Form</title>
+    <title>Redirecting to Club Tattoo Form</title>
 </head>
 <body>
-    <h2>Redirecting to the tattoo deposit form...</h2>
+    <h2>Redirecting to the form...</h2>
 
     <script>
-        // Delay to allow the form to load properly
+        // Function to encode data into a URL format
+        function encodeParams(params) {
+            return Object.keys(params)
+                .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+                .join("&");
+        }
+
+        // Define the form fields and values
+        let formData = {
+            "email": "john@example.com",
+            "phone": "1234567890",
+            "appointment_time": "2:00 PM",
+            "appointment_date": "2025-03-20",
+            "artist": "Alejandro",
+            "tattoo_quote_amount": "300",
+            "tattoo_deposit_amount": "100"
+        };
+
+        // Construct the new URL with parameters
+        let formUrl = "https://clubtattoo.com/pages/cc-las-vegas?" + encodeParams(formData);
+
+        // Redirect after a short delay
         setTimeout(() => {
-            let fields = {
-                "email": "john@example.com",
-                "phone": "1234567890",
-                "appointment_time": "2:00 PM",
-                "appointment_date": "2025-03-20",
-                "artist": "Alejandro",
-                "tattoo_quote_amount": "300",
-                "tattoo_deposit_amount": "100"
-            };
-
-            function autofillForm() {
-                let formFrame = document.querySelector("iframe"); // If form is inside an iframe
-                let formDoc = formFrame ? formFrame.contentDocument || formFrame.contentWindow.document : document;
-
-                formDoc.querySelectorAll('input, select, textarea').forEach(field => {
-                    let fieldName = field.getAttribute("name") || "";
-                    Object.entries(fields).forEach(([key, value]) => {
-                        if (fieldName.includes(key)) {
-                            field.value = value;
-                            field.dispatchEvent(new Event('input', { bubbles: true }));
-                        }
-                    });
-                });
-
-                console.log("Form autofilled!");
-            }
-
-            autofillForm();
-
-            // Redirect to the official form page after 3 seconds
-            setTimeout(() => {
-                window.location.href = "https://clubtattoo.com/pages/cc-las-vegas";
-            }, 3000);
-        }, 2000); // 2-second delay for page load
+            window.location.href = formUrl;
+        }, 2000);
     </script>
 </body>
 </html>
