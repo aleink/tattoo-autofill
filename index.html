@@ -3,37 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting to Club Tattoo Form</title>
+    <title>Redirecting to Club Tattoo Form...</title>
 </head>
 <body>
-    <h2>Redirecting to the form...</h2>
+    <h2>Redirecting to the tattoo deposit form...</h2>
 
     <script>
-        // Function to encode data into a URL format
-        function encodeParams(params) {
-            return Object.keys(params)
-                .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
-                .join("&");
+        function fillForm() {
+            setTimeout(() => {
+                let fields = [
+                    { selector: 'input[id="form_input_0"]', value: "John Doe" }, // Full Name
+                    { selector: 'input[name="Email"]', value: "john@example.com" }, // Email
+                    { selector: 'input[name="Phone Number"]', value: "1234567890" }, // Phone
+                    { selector: 'input[name="Appointment Time"]', value: "2:00 PM" }, // Time
+                    { selector: 'input[name="Appointment Date"]', value: "2025-03-20" }, // Date
+                    { selector: 'select[name="Artist"]', value: "Alejandro" }, // Artist
+                    { selector: 'input[name="Tattoo Quote Amount"]', value: "300" }, // Quote
+                    { selector: 'input[name="Tattoo Deposit Amount"]', value: "100" } // Deposit
+                ];
+
+                fields.forEach(field => {
+                    let inputElement = document.querySelector(field.selector);
+                    if (inputElement) {
+                        inputElement.focus();
+                        inputElement.value = field.value;
+                        inputElement.dispatchEvent(new Event('input', { bubbles: true }));
+                        inputElement.blur();
+                    }
+                });
+
+                console.log("Form autofilled!");
+            }, 3000); // Wait 3 seconds to allow the form to load
         }
 
-        // Define the form fields and values
-        let formData = {
-            "email": "john@example.com",
-            "phone": "1234567890",
-            "appointment_time": "2:00 PM",
-            "appointment_date": "2025-03-20",
-            "artist": "Alejandro",
-            "tattoo_quote_amount": "300",
-            "tattoo_deposit_amount": "100"
-        };
-
-        // Construct the new URL with parameters
-        let formUrl = "https://clubtattoo.com/pages/cc-las-vegas?" + encodeParams(formData);
-
-        // Redirect after a short delay
+        // Redirect to the form page and fill data
         setTimeout(() => {
-            window.location.href = formUrl;
-        }, 2000);
+            window.location.href = "https://clubtattoo.com/pages/cc-las-vegas";
+        }, 1000);
+
+        setTimeout(fillForm, 5000); // Wait for the form page to load, then fill
     </script>
 </body>
 </html>
