@@ -9,7 +9,8 @@
     <h2>Redirecting to the tattoo deposit form...</h2>
 
     <script>
-        function fillForm() {
+        // Wait for the page to fully load
+        function autofillForm() {
             setTimeout(() => {
                 let fields = [
                     { selector: 'input[id="form_input_0"]', value: "John Doe" }, // Full Name
@@ -33,15 +34,17 @@
                 });
 
                 console.log("Form autofilled!");
-            }, 3000); // Wait 3 seconds to allow the form to load
+            }, 5000); // 5-second delay for slow loading
         }
 
-        // Redirect to the form page and fill data
+        // Redirect to the form and autofill after a delay
         setTimeout(() => {
             window.location.href = "https://clubtattoo.com/pages/cc-las-vegas";
-        }, 1000);
+        }, 2000);
 
-        setTimeout(fillForm, 5000); // Wait for the form page to load, then fill
+        // Inject autofill script once redirected
+        setTimeout(autofillForm, 8000);
     </script>
 </body>
 </html>
+
